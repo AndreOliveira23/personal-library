@@ -6,3 +6,8 @@ This is a personal project. Over the past few months, I've been discovering new 
 ## General Idea
 
 As the title suggests, I want to build a personal library. At my house, we have a lot of books, so it's easy not to know if we have a specific book or no. My idea is to build an application just for catalogue those books. I choose that idea because I wanted something that I could easily imagine all the 'architecture' of the system. It had to be something that I could easily remember, and that fits with my current level of coding. Also, I can practice my english by writing this README and the message for the commits :) 
+
+## Used technologies
+
+
+I'll describe each one of them as soon as they get mentioned here. (e.g. "For achieve this, I'll use [some tech]"). This tech will be added to a list in this section.
