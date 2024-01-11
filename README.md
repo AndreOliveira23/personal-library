@@ -9,5 +9,9 @@ As the title suggests, I want to build a personal library. At my house, we have 
 
 ## Used technologies
 
-
 I'll describe each one of them as soon as they get mentioned here. (e.g. "For achieve this, I'll use [some tech]"). This tech will be added to a list in this section.
+
+### Server: Old PC STI, Motherboard model STI-005492, Processor Intel® Core™ 2 Duo E6300, 2GB RAM, SSD KINGSTON SA400S3 - 120GB.
+
+First things first, I want to start to describe the hardware used in this project. I got and old PC that was just collecting dust, So I decided to use him this way. This computer has been through a lot since my father firstly bought it till I really learn how to use it in the best way. I'm particularly proud of myself for being capable of turn a computer with these specs into a personal server. It ain't much, but it's honest work ;) (Note: I just checked, and right now, I pretty sure that this PC is in the highest usage of memory of all time (since I started using as server: 561MB / 2GB). That's pretty cool)
+ 
