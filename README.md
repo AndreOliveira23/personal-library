@@ -18,3 +18,7 @@ First things first, I want to start to describe the hardware used in this projec
 ### Main laptop: Samsung Essentials E20, CPU Intel® Celeron® 4205U, 8GB RAM, SSD KINGSTON SA400S3 - 480GB.
 
 My main laptop, well, is pretty basic. My father also bought it...back at the time, I didn't had the knowledge I have today, otherwise, I'd definetely help him to get a laptop at least with a better CPU hahaha. Anyway...Just as described in the server section, I've learned how to use computers in the way that better suits my needs, so I know that it's possible to develop this project using this hardware. And what allowed me to use these computers as I described here was the Operating System, that I'll describe in the next section!
+
+### Operating Systems: Ubuntu Server 22.04.3 LTS and Manjaro Linux
+
+To be continued....
