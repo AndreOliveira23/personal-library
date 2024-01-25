@@ -22,3 +22,23 @@ My main laptop, well, is pretty basic. My father also bought it...back at the ti
 ### Operating Systems: Ubuntu Server 22.04.3 LTS and Manjaro Linux
 
 To be continued....
+
+### Development Tools
+
+(...)
+
+### 'Pseudo'-data-modeling
+I take a couple hours today to define the first entity of the system, in order to commit the boilerplate code and at least the first class. I asked for some help to determinate which info should I keep in the system. As my sister reads a lot, and hopefully will use this system sometimes, I asked her to think about what would she want to keep about each book. So our first entity is book, and here are it fields:
+#### Entity "Book" - first draft
+|                 |         |
+|-----------------|---------|
+| Field           | Type    |
+| Title           | String  |
+| Genre           | String  |
+| Owner           | String  |
+| Shelf Number    | Integer |
+| Number of Pages | Integer |
+| Author          | String  |
+| Synopsis        | String  |
+
+Based on this, I'll code the 'book' class
