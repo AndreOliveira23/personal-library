@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.personallibrary.entities.Book;
 import com.example.personallibrary.exceptions.ResourceNotFoundException;
 import com.example.personallibrary.repositories.BookRepository;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,22 +21,26 @@ public class BookController {
     @Autowired
     private BookRepository repository;
 
+    @CrossOrigin
     @GetMapping("/books")
     public java.util.List<Book> allBooks() {
         return repository.findAll();
     }
 
+    @CrossOrigin
     @GetMapping("/books/{id}")
-    public Book getOneBook(@PathVariable int id) {
+    public Book getOneBook(@PathVariable(name = "id") int id) {
         return repository.findById(id)
         .orElseThrow(ResourceNotFoundException::new);
     }
 
+    @CrossOrigin
     @PostMapping("/books")
     public Book createBook(@RequestBody Book book) {
         return repository.save(book);
     }
 
+    @CrossOrigin
     @PutMapping("/books/{id}")
     public Book updateBook(@PathVariable int id, @RequestBody Book book) {
         return repository.findById(id)
