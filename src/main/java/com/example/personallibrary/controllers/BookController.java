@@ -1,10 +1,14 @@
 package com.example.personallibrary.controllers;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.personallibrary.entities.Book;
-import com.example.personallibrary.exceptions.ResourceNotFoundException;
 import com.example.personallibrary.repositories.BookRepository;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,15 +27,18 @@ public class BookController {
 
     @CrossOrigin
     @GetMapping("/books")
-    public java.util.List<Book> allBooks() {
+    public List<Book> allBooks() {
         return repository.findAll();
     }
 
     @CrossOrigin
     @GetMapping("/books/{id}")
-    public Book getOneBook(@PathVariable(name = "id") int id) {
-        return repository.findById(id)
-        .orElseThrow(ResourceNotFoundException::new);
+    public ResponseEntity getOneBook(@PathVariable(name = "id") int id) {
+        
+        Optional<Book> book = repository.findById(id);        
+        
+        return book.isPresent() ? ResponseEntity.ok(book.get()) : 
+                                  ResponseEntity.status(HttpStatus.NOT_FOUND).body("No book was found");
     }
 
     @CrossOrigin
@@ -42,19 +49,15 @@ public class BookController {
 
     @CrossOrigin
     @PutMapping("/books/{id}")
-    public Book updateBook(@PathVariable int id, @RequestBody Book book) {
+    public ResponseEntity updateBook(@PathVariable(name = "id") int id, @RequestBody Book book) {
         return repository.findById(id)
         .map( existingBook -> {
-            existingBook.setAuthor(book.getAuthor());
-            existingBook.setGenre(book.getGenre());
-            existingBook.setId(book.getId());
-            existingBook.setNumber_of_pages(book.getNumber_of_pages());
-            existingBook.setOwner(book.getOwner());
-            existingBook.setShelf_number(book.getShelf_number());
-            existingBook.setSynopsis(book.getSynopsis());
-            existingBook.setTitle(book.getTitle());
-            return repository.save(existingBook);
+            
+            book.setId(existingBook.getId());
+            repository.save(book);
+            return ResponseEntity.status(HttpStatus.OK).body("Book updated successfully");
         })
-        .orElseThrow(ResourceNotFoundException::new);
+        .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("No book with id {"+id+"} was found"));
+
     }
 }
