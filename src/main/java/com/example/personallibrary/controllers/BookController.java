@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
@@ -75,15 +76,37 @@ public class BookController {
     }
 
     @CrossOrigin
-    @GetMapping("/books/search/{title}")
-    public ResponseEntity find(@PathVariable(name="title") String title){
+    @GetMapping("/books/search/{field}/{field-value}")
+    public ResponseEntity find(@PathVariable(name="field")String field, @PathVariable(name="field-value")String value){
+        List<Book> books = null;
 
-        List<Book> books = repository.findAll()
-                                     .stream()
-                                     .filter(book -> book.getTitle().toLowerCase()
-                                     .contains(title.toLowerCase()))
-                                     .collect(Collectors.toList());
+        switch (field.toLowerCase()) {
+            case "title":
+                books = repository.findAll()
+                .stream()
+                .filter(book -> book.getTitle().toLowerCase()
+                .contains(value.toLowerCase()))
+                .collect(Collectors.toList());
+                break;
 
+            case "author":
+                books = repository.findAll()
+                .stream()
+                .filter(book -> book.getAuthor().toLowerCase()
+                .contains(value.toLowerCase()))
+                .collect(Collectors.toList());
+            break;
+        }
         return books.isEmpty() ? ResponseEntity.status(HttpStatus.NOT_FOUND).body("No book was found") : ResponseEntity.ok(books);
     } 
-} 
+    
+    @CrossOrigin
+    @GetMapping("/books/search")
+    public ResponseEntity find(@RequestParam("name") String name){
+        
+        List<Book> books = repository.findAllByAuthor(name);
+
+        return books.isEmpty() ? ResponseEntity.status(HttpStatus.NOT_FOUND).body("No book was found") : ResponseEntity.ok(books);
+    
+    }
+}
