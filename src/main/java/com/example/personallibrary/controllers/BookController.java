@@ -2,6 +2,7 @@ package com.example.personallibrary.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import com.example.personallibrary.entities.Book;
 import com.example.personallibrary.repositories.BookRepository;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,5 +61,29 @@ public class BookController {
         })
         .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("No book with id {"+id+"} was found"));
 
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/books/{id}")
+    public ResponseEntity deleteBook(@PathVariable int id){
+        return repository.findById(id)
+        .map(book -> {
+            repository.delete(book);
+            return ResponseEntity.status(HttpStatus.OK).body("Book deleted successfully");
+
+        }).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("No book wih id {"+id+"} was found")); 
+    }
+
+    @CrossOrigin
+    @GetMapping("/books/search/{name}")
+    public ResponseEntity find(@PathVariable String name){
+
+        List<Book> books = repository.findAll()
+                                     .stream()
+                                     .filter(book -> book.getTitle().toLowerCase()
+                                     .contains(name.toLowerCase()))
+                                     .collect(Collectors.toList());
+
+        return ResponseEntity.ok(books);
     }
 }
