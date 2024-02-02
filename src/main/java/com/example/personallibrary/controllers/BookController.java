@@ -76,7 +76,7 @@ public class BookController {
 
     @CrossOrigin
     @GetMapping("/books/search/{title}")
-    public ResponseEntity find(@PathVariable String title){
+    public ResponseEntity find(@PathVariable(name="title") String title){
 
         List<Book> books = repository.findAll()
                                      .stream()
