@@ -75,15 +75,15 @@ public class BookController {
     }
 
     @CrossOrigin
-    @GetMapping("/books/search/{name}")
-    public ResponseEntity find(@PathVariable String name){
+    @GetMapping("/books/search/{title}")
+    public ResponseEntity find(@PathVariable String title){
 
         List<Book> books = repository.findAll()
                                      .stream()
                                      .filter(book -> book.getTitle().toLowerCase()
-                                     .contains(name.toLowerCase()))
+                                     .contains(title.toLowerCase()))
                                      .collect(Collectors.toList());
 
-        return ResponseEntity.ok(books);
-    }
-}
+        return books.isEmpty() ? ResponseEntity.status(HttpStatus.NOT_FOUND).body("No book was found") : ResponseEntity.ok(books);
+    } 
+} 
