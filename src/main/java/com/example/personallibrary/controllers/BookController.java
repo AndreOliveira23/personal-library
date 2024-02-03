@@ -75,6 +75,7 @@ public class BookController {
         }).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("No book wih id {"+id+"} was found")); 
     }
 
+    //Definir filtros a serem usados para definir queries a serem feitas
     @CrossOrigin
     @GetMapping("/books/search/{field}/{field-value}")
     public ResponseEntity find(@PathVariable(name="field")String field, @PathVariable(name="field-value")String value){
