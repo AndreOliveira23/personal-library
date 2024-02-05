@@ -74,40 +74,4 @@ public class BookController {
 
         }).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("No book wih id {"+id+"} was found")); 
     }
-
-    //Definir filtros a serem usados para definir queries a serem feitas
-    @CrossOrigin
-    @GetMapping("/books/search/{field}/{field-value}")
-    public ResponseEntity find(@PathVariable(name="field")String field, @PathVariable(name="field-value")String value){
-        List<Book> books = null;
-
-        switch (field.toLowerCase()) {
-            case "title":
-                books = repository.findAll()
-                .stream()
-                .filter(book -> book.getTitle().toLowerCase()
-                .contains(value.toLowerCase()))
-                .collect(Collectors.toList());
-                break;
-
-            case "author":
-                books = repository.findAll()
-                .stream()
-                .filter(book -> book.getAuthor().toLowerCase()
-                .contains(value.toLowerCase()))
-                .collect(Collectors.toList());
-            break;
-        }
-        return books.isEmpty() ? ResponseEntity.status(HttpStatus.NOT_FOUND).body("No book was found") : ResponseEntity.ok(books);
-    } 
-    
-    @CrossOrigin
-    @GetMapping("/books/search")
-    public ResponseEntity find(@RequestParam("name") String name){
-        
-        List<Book> books = repository.findAllByAuthor(name);
-
-        return books.isEmpty() ? ResponseEntity.status(HttpStatus.NOT_FOUND).body("No book was found") : ResponseEntity.ok(books);
-    
-    }
 }
