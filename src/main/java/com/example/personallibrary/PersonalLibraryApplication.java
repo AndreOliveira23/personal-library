@@ -19,7 +19,7 @@ public class PersonalLibraryApplication extends SpringBootServletInitializer{
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(PersonalLibraryApplication.class);
 	}
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(PersonalLibraryApplication.class, args);
 	}
