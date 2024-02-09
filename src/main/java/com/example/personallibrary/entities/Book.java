@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,12 +24,22 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
+    @NotEmpty(message = "{invalid.title}")
     private String title;
-    private String genre;
-    private String owner;
-    private int shelf_number;
-    private int number_of_pages;
-    private String author;
-    private String synopsis;
 
+    @NotEmpty(message = "Must have a genre")
+    private String genre;
+
+    @NotEmpty(message = "Must have an owner")
+    private String owner;
+
+    @NotNull
+    private int shelf_number;
+
+    private int number_of_pages;
+
+    @NotEmpty(message = "Must have an author")
+    private String author;
+
+    private String synopsis;
 }

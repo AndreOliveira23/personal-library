@@ -12,9 +12,10 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import com.example.personallibrary.entities.Book;
-import com.example.personallibrary.exceptions.BookNotFoundException;
 import com.example.personallibrary.query.BookQuery;
 import com.example.personallibrary.repositories.BookRepository;
+
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -65,20 +66,20 @@ public class BookController {
     @CrossOrigin
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Book createBook(@RequestBody Book book) {
+    public Book createBook(@RequestBody @Valid Book book) {
         return repository.save(book);
     }
 
     @CrossOrigin
     @PutMapping("/{id}")
-    public Book updateBook(@PathVariable(name = "id") int id, @RequestBody Book book) {
+    public Book updateBook(@PathVariable(name = "id") int id, @RequestBody @Valid Book book) {
         return repository.findById(id)
         .map( existingBook -> {       
             book.setId(existingBook.getId());
             repository.save(book);
             return book;
         })
-        .orElseThrow(BookNotFoundException::new);
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @CrossOrigin
