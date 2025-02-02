@@ -23,30 +23,15 @@ public class BookQuery {
         List<Book> books = null;
 
         switch (field.toLowerCase()) {
-            case "author":
-                books = findByAuthor(value);
-                break;
+            case "author" -> books = findByAuthor(value);
 
-            case "title":
-                books = findByTitle(value);
-                break;
+            case "title" ->  books = findByTitle(value);
 
-            case "shelf_number":
-                Integer number = Integer.parseInt(value);
-                books = findyShelfNumber(number);
-                break;
+            case "shelf_number" ->  books = findyShelfNumber(Integer.parseInt(value));
             
-            case "genre":
-                books = findByGenre(value);
-                break;
+            case "genre" -> books = findByGenre(value);
 
-            case "owner":
-                books = findByOwner(value);
-                break;
-        }
-
-        if (field.equalsIgnoreCase("author")) {
-            books = findByAuthor(value);
+            case "owner" -> books = findByOwner(value);
         }
         return books;
     }

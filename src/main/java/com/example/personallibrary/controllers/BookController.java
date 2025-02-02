@@ -2,10 +2,8 @@ package com.example.personallibrary.controllers;
 
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -54,13 +52,12 @@ public class BookController {
     @CrossOrigin
     @GetMapping("/search")
     public List<Book> searchBooks(@RequestParam Map<String, String> queryParams) throws NoResourceFoundException {
-        try {
-            return bookQuery.find(queryParams.entrySet().iterator().next().getKey(),
-            queryParams.entrySet().iterator().next().getValue());
+        List<Book> book = bookQuery.find(queryParams.entrySet().iterator().next().getKey(),
+                queryParams.entrySet().iterator().next().getValue());
+        if(book.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
-        } catch (NoSuchElementException e) {
-            throw new NoResourceFoundException(HttpMethod.GET, "");
-        }
+        return book;
     }
 
     @CrossOrigin

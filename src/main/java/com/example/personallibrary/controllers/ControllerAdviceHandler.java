@@ -1,5 +1,6 @@
 package com.example.personallibrary.controllers;
 
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -11,7 +12,6 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @ControllerAdvice
@@ -39,14 +39,14 @@ public class ControllerAdviceHandler {
                         "  \"message\": "+"No book was found"+"\n" +
                       "}";
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
-    } 
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> resourceNotFound(MethodArgumentNotValidException e) {
         LocalDateTime timestamp = LocalDateTime.now();
         List<String> message = e.getBindingResult().getAllErrors().stream()
-                                .map(erro -> erro.getDefaultMessage()).collect(Collectors.toList());
+                                .map(DefaultMessageSourceResolvable::getDefaultMessage).toList();
 
         String body = "{ \n" +
                         "  \"status\": \"BAD_REQUEST\",\n" +
